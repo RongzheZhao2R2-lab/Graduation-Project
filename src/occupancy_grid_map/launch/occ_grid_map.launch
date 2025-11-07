@@ -1,0 +1,67 @@
+<launch>
+    <group  ns="iris_0">
+        <node pkg="occupancy_grid_map" name="occ_grid_map_node" type="occ_grid_map_node" output="screen">
+
+            <param name="use_pose" value="true"/>
+            <!-- <remap from="~occupancy_grid_map/pose" to="/ground_truth_pose" /> -->
+            <remap from="~occupancy_grid_map/pose" to="mavros/local_position/pose" />
+
+            <remap from="~occupancy_grid_map/odom" to="mavros/odometry/in" />
+
+            <param name="use_vision" value="true"/>
+            <param name="use_2d_lidar" value="true"/>
+            <remap from="~occupancy_grid_map/depth" to="realsense/depth_camera/depth/image_raw" />
+
+            <remap from="~occupancy_grid_map/scan" to="/scan" />
+
+            <!-- 分辨率为0.15m -->
+            <param name="occupancy_grid_map/resolution" value="0.15" />
+            <!-- 占用地图大小 x为50m -->
+            <param name="occupancy_grid_map/map_size_x" value="10" />
+            <!-- 占用地图大小 y为50m -->
+            <param name="occupancy_grid_map/map_size_y" value="10" />
+            <!-- 占用地图大小 z为5m -->
+            <param name="occupancy_grid_map/map_size_z" value="4" />
+
+            <param name="occupancy_grid_map/show_local_map" value="false" />
+            <param name="occupancy_grid_map/show_global_map" value="true" />
+
+            <!-- 栅格地图膨胀率 -->
+            <param name="occupancy_grid_map/obstacles_inflation" value="0.15"/>
+            <!-- 地图起始点的地平线 -->
+            <param name="occupancy_grid_map/ground_height" value="-1.0"/>
+
+            <!-- 相机分辨率 -->
+            <param name="occupancy_grid_map/cam_depth_width" value="640" />
+            <param name="occupancy_grid_map/cam_depth_height" value="480" />
+            <!-- 深度相机的比例参数 -->
+            <param name="occupancy_grid_map/k_depth_scaling_factor" value="1000.0" />
+            <!-- 相机内参 -->
+            <param name="occupancy_grid_map/fx" value="554.254691191187" />
+            <param name="occupancy_grid_map/fy" value="554.254691191187" />
+            <param name="occupancy_grid_map/cx" value="320.5" />
+            <param name="occupancy_grid_map/cy" value="240.5" />
+
+            <param name="occupancy_grid_map/depth_maxdist" value="5.0" />
+            <param name="occupancy_grid_map/depth_minidist" value="0.2" />
+            <param name="occupancy_grid_map/max_ray_length" value="4.5" />
+            <param name="occupancy_grid_map/min_ray_length" value="0.1" />
+
+            <param name="occupancy_grid_map/depth_filter_margin" value="2" />
+            <param name="occupancy_grid_map/skip_pixel" value="4" />
+    
+            <!-- 占据栅格地图的最大概率0.8则认为是占据状态 -->
+            <param name="occupancy_grid_map/p_occ_max" value="0.75" />
+            <!-- 占据栅格地图的最小截断概率0.12，用于初始化 -->
+            <param name="occupancy_grid_map/p_occ_min" value="0.12" />
+            <!-- logit -->
+            <param name="occupancy_grid_map/lofree" value="0.37" />
+            <param name="occupancy_grid_map/looccu" value="0.70" />
+
+            <param name="occupancy_grid_map/frame_id" value="map" />    
+        </node>
+    
+    <!-- <node pkg="rviz" type="rviz" name="rviz" args=""/> -->
+
+    </group>
+</launch>

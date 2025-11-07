@@ -1,0 +1,6 @@
+<launch>
+    <node name="rrt_map_generate_test" pkg="a_star" type="rrt_map_generate_test" output="screen"/>
+    <node name="rviz" pkg="rviz" type="rviz" output="screen"
+        args="-d $(find a_star)/config/rrt_map_gen.rviz"> 
+    </node>    
+</launch>

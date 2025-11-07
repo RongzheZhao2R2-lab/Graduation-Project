@@ -1,0 +1,9 @@
+<launch>
+    <node name="rfs_ego_2d_test" pkg="minco_trajectory" type="rfs_ego_2d_test"  output="screen">
+        
+    </node>
+    
+    <node name="rviz" pkg="rviz" type="rviz" output="screen"
+        args="-d $(find minco_trajectory)/config/minco_test_2d.rviz"> 
+    </node>
+</launch>

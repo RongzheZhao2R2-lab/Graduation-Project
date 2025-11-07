@@ -1,0 +1,8 @@
+prefix=/home/zrz/Aerial_Robotics/devel
+
+Name: a_star
+Description: Description of a_star
+Version: 0.0.0
+Cflags: -I/home/zrz/Aerial_Robotics/src/a_star/include
+Libs: -L${prefix}/lib -la_star
+Requires: occupancy_grid_map roscpp sensor_msgs std_msgs geometry_msgs

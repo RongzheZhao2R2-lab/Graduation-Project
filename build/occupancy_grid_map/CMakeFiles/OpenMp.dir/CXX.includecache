@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/zrz/Aerial_Robotics/src/occupancy_grid_map/src/OpenMp.cpp
+iostream
+-
+chrono
+-
+omp.h
+/home/zrz/Aerial_Robotics/src/occupancy_grid_map/src/omp.h
+

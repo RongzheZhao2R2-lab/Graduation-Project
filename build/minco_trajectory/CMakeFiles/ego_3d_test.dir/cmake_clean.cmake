@@ -1,0 +1,10 @@
+file(REMOVE_RECURSE
+  "/home/zrz/Aerial_Robotics/devel/lib/minco_trajectory/ego_3d_test"
+  "/home/zrz/Aerial_Robotics/devel/lib/minco_trajectory/ego_3d_test.pdb"
+  "CMakeFiles/ego_3d_test.dir/src/ego_3d_test.cpp.o"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/ego_3d_test.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

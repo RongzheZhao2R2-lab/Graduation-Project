@@ -1,0 +1,6 @@
+<launch>
+    <node name="a_star_load_height_map_test" pkg="a_star" type="a_star_load_height_map_test" output="screen"/>
+    <node name="rviz" pkg="rviz" type="rviz" output="screen"
+        args="-d $(find a_star)/config/load_height_map.rviz"> 
+    </node>    
+</launch>

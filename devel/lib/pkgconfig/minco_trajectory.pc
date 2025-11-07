@@ -1,0 +1,8 @@
+prefix=/home/zrz/Aerial_Robotics/devel
+
+Name: minco_trajectory
+Description: Description of minco_trajectory
+Version: 0.0.0
+Cflags: -I/home/zrz/Aerial_Robotics/src/minco_trajectory/include
+Libs: -L${prefix}/lib -lminco_trajectory
+Requires: a_star geometry_msgs occupancy_grid_map roscpp visualization_msgs

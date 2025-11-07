@@ -1,0 +1,1 @@
+/usr/bin/c++    -O3 -Wall -g    -rdynamic CMakeFiles/OpenMp.dir/src/OpenMp.cpp.o  -o /home/zrz/Aerial_Robotics/devel/lib/occupancy_grid_map/OpenMp 

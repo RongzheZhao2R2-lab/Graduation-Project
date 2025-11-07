@@ -1,0 +1,2 @@
+a_star:minco_trajectory:occupancy_grid_map:rviz_plugins
+-DCATKIN_DEVEL_PREFIX=/home/zrz/Aerial_Robotics/devel -DCMAKE_INSTALL_PREFIX=/home/zrz/Aerial_Robotics/install -G Unix Makefiles
