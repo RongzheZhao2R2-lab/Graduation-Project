@@ -1,4 +1,4 @@
-# Autonomous Quadrotor: Visual SLAM, Planning & Control Framework
+# Design and Implementation of Autonomous UAV Attitude Control , Trajectory Tracking and Map Construction System
 
 [![ROS Noetic](https://img.shields.io/badge/ROS-Noetic-blue)](http://wiki.ros.org/noetic)
 [![PX4 Autopilot](https://img.shields.io/badge/PX4-Autopilot-black)](https://px4.io/)
