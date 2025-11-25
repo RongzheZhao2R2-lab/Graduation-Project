@@ -1,10 +1,54 @@
-**Platform:** ROS (Robot Operating System) / C++
+# Autonomous Quadrotor: Visual SLAM, Planning & Control Framework
 
-### Project Overview and Repository Structure
-This repository hosts the source code and engineering environment for my Bachelor's graduation project, which focuses on the development of an autonomous control system for quadcopters. To facilitate both code review and deployment, the repository is organized into two distinct branches. The **`main` branch** is streamlined to highlight the core algorithmic contributions; it isolates the essential C++ source files recently updated for the control logic and sensor fusion modules, allowing reviewers to inspect the implementation details without navigating through build artifacts. Conversely, the **`master` branch** serves as a complete snapshot of the runtime environment. It preserves the full ROS Catkin workspace structure—including `src`, `build`, and `devel` directories—to ensure that the specific compilation environment and dependency configurations can be exactly reproduced on a physical Linux machine.
+[![ROS Noetic](https://img.shields.io/badge/ROS-Noetic-blue)](http://wiki.ros.org/noetic)
+[![PX4 Autopilot](https://img.shields.io/badge/PX4-Autopilot-black)](https://px4.io/)
+[![VINS-Fusion](https://img.shields.io/badge/SLAM-VINS%20Fusion-purple)](https://github.com/HKUST-Aerial-Robotics/VINS-Fusion)
+[![OpenCV](https://img.shields.io/badge/Computer_Vision-OpenCV%204.0-green)](https://opencv.org/)
+[![Language](https://img.shields.io/badge/C++-14-orange)](https://isocpp.org/)
 
-### Technical Implementation Details
-The core logic residing in this project implements a modular architecture dividing perception, state estimation, and flight control. The `rtk_convert.cpp` module acts as the driver layer, responsible for parsing high-precision GNSS differential data and converting geodetic coordinates into a local NED (North-East-Down) frame for navigation. This position data is fused with IMU acceleration readings within `cuadc_odom.cpp`, which utilizes filtration algorithms to provide stable odometry and minimize drift during flight. The system's behavior is orchestrated by `cuadc_node.cpp` and `cuadc_takeoff.cpp`, which implement a finite state machine managing the complete flight lifecycle—from safety checks and arming to autonomous takeoff and mission execution—demonstrating the practical application of the control theories explored in my thesis.
+**Developer:** Rongzhe Zhao  
+**Architecture:** Distributed Embedded System (Jetson Xavier NX + Pixhawk 4)
 
-### Deployment Instructions
-For users intending to compile or deploy the system, please switch to the **`master` branch**. This branch contains the necessary CMake configurations and the pre-generated build environment compatible with ROS Noetic. To deploy, simply clone the `master` branch into your local environment and execute `catkin_make` at the workspace root. This will generate the executable nodes and link the libraries required to communicate with the flight controller hardware and onboard sensors.
+---
+
+## 1. System Abstract
+This project implements a full-stack autonomy framework for a quadrotor UAV, capable of operating in GPS-denied environments. The system leverages **VINS-Fusion** for high-precision Visual-Inertial Odometry (VIO), fusing data from a RealSense D435i (Stereo + IMU). It features a tightly coupled architecture integrating **3D Occupancy Grid Mapping**, **Kinodynamic A_star Planning**, and **Geometric Tracking Control**.
+
+Key Capabilities:
+*   **Robust State Estimation:** Tightly-coupled fusion of camera and IMU data.
+*   **Dense Mapping:** Real-time 3D voxel mapping using Octomap.
+*   **Reactive Planning:** Dynamic obstacle avoidance in complex clutter.
+
+---
+
+## 2. System Architecture & Logic Flow
+
+The software follows a multi-threaded architecture ensuring thread safety between perception (high latency) and control loops (real-time hard constraints).
+
+```mermaid  
+graph TD  
+    subgraph "Sensing & State Estimation"  
+    A["RealSense D435i"] -->|"Images + IMU"| B("VINS-Fusion Node")  
+    B -->|"Odometry (Pose + Twist)"| C["State Estimator"]  
+    A -->|"Depth Cloud"| D("PCL Filter / Raycast")  
+    D --> E["Octomap Server"]  
+    end  
+
+    subgraph "Decision & Planning"  
+    E -->|"Occupancy Grid"| F("A* Planner Node")  
+    C -->|"Current Pose"| F  
+    F -->|"Trajectory Points"| G["Finite State Machine (FSM)"]  
+    end  
+
+    subgraph "Control Layer (Real-time)"  
+    G -->|"Target Setpoint"| H("Geometric Controller")  
+    C -->|"Feedback"| H  
+    H -->|"Attitude/Thrust"| I["MAVROS Bridge"]  
+    I -->|"UART/Serial"| J["PX4 Flight Controller"]  
+    end  
+
+    subgraph "Embedded Implementation"  
+    K["Thread: SLAM"] -.->|"Mutex Lock"| L["Shared Map Data"]  
+    M["Thread: Control"] -.->|"Mutex Lock"| N["Shared State Data"]  
+    end
+
