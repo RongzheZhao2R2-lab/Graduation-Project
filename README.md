@@ -11,7 +11,9 @@
 ---
 
 ## 1. System Abstract
-This project implements a full-stack autonomy framework for a quadrotor UAV, capable of operating in GPS-denied environments. The system leverages **VINS-Fusion** for high-precision Visual-Inertial Odometry (VIO), fusing data from a RealSense D435i (Stereo + IMU). It features a tightly coupled architecture integrating **3D Occupancy Grid Mapping**, **Kinodynamic A_star Planning**, and **Geometric Tracking Control**.
+This graduation project presents a fully autonomous UAV system designed for exploration without GPS reliance. The architecture combines robust attitude control algorithms with visual-inertial state estimation to achieve centimeter-level trajectory tracking. Furthermore, the system performs real-time simultaneous localization and mapping (SLAM), enabling the drone to perceive obstacles and construct detailed 3D environmental maps on the fly.
+
+The system leverages **VINS-Fusion** for high-precision Visual-Inertial Odometry (VIO), fusing data from a RealSense D435i (Stereo + IMU). It features a tightly coupled architecture integrating **3D Occupancy Grid Mapping**, **Kinodynamic A_star Planning**, and **Geometric Tracking Control**.
 
 Key Capabilities:
 *   **Robust State Estimation:** Tightly-coupled fusion of camera and IMU data.
